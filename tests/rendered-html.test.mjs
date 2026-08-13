@@ -31,7 +31,11 @@ test("server-renders Jake's portfolio", async () => {
   assert.match(html, /Pen Plotter Experiments/i);
   assert.match(html, /ESP32 Addressable LED Controller/i);
   assert.match(html, /putting-cv\/hero\.mp4/i);
+  assert.match(html, /putting-cv\/system-diagram\.png/i);
+  assert.match(html, /imu-golf\/controller-diagram\.png/i);
+  assert.match(html, /fitness-platform\/load-cell-board\.png/i);
   assert.match(html, /chain-plotter\.mp4/i);
+  assert.match(html, /plotters\/mini-plotter\.png/i);
   assert.match(html, /SELECTED WORK/i);
   assert.doesNotMatch(html, /FEATURED PROJECTS|SMALLER BUILDS/i);
   assert.doesNotMatch(html, /media-asset|PROJECT CLIP|RELATED VIEWS/i);
