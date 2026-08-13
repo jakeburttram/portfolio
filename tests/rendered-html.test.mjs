@@ -25,9 +25,13 @@ test("server-renders Jake's portfolio", async () => {
   assert.match(html, /Automated Needlepoint Printer/i);
   assert.match(html, /Wireless IMU Golf Simulator/i);
   assert.match(html, /CNC Robotic Massager/i);
-  assert.match(html, /Other Builds|SMALLER BUILDS/i);
-  assert.match(html, /PUTTING-CV\/HERO\.WEBP/i);
-  assert.match(html, /NEEDLEPOINT\/V1-PLOTTER\.WEBP/i);
-  assert.match(html, /NEEDLEPOINT\/V2-INKJET\.WEBP/i);
+  assert.match(html, /Interactive Fitness Platform/i);
+  assert.match(html, /Miniature LED Fireplace/i);
+  assert.match(html, /UV Glow Plotter/i);
+  assert.match(html, /Pen Plotter Experiments/i);
+  assert.match(html, /ESP32 Addressable LED Controller/i);
+  assert.match(html, /SELECTED WORK/i);
+  assert.doesNotMatch(html, /FEATURED PROJECTS|SMALLER BUILDS/i);
+  assert.doesNotMatch(html, /media-asset|PROJECT CLIP|RELATED VIEWS/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site|react-loading-skeleton/i);
 });

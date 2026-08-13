@@ -8,7 +8,13 @@ const requiredAssets = [
   "out/assets/imu-golf/demo.webp",
   "out/assets/cnc-massager/hero.webp",
   "out/assets/cnc-massager/cad.png",
+  "out/assets/fitness-platform/demo.webp",
   "out/assets/fireplace/cad.png",
+  "out/assets/fireplace/hero.webp",
+  "out/assets/plotters/chain-plotter.webp",
+  "out/assets/led-controller/hero.webp",
+  "out/assets/led-controller/matrix.webp",
+  "out/assets/uv-plotter/demo.webp",
   "out/assets/uv-plotter/galvo-cad.png",
 ];
 
