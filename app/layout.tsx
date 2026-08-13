@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jake Burttram — Mechanical Engineer & Maker",
-  description: "A maker portfolio of unusual ideas brought to life through engineering, code, fabrication, and prototyping.",
+  title: "Jake Burttram | Mechanical Engineer · Prototyper · Builder",
+  description: "A mechanical engineering and hands-on prototyping portfolio: physical systems built with mechanics, electronics, sensing, software, and iteration.",
   openGraph: {
-    title: "Jake Burttram — Mechanical Engineer & Maker",
-    description: "Unusual ideas, brought to life through engineering and making.",
+    title: "Jake Burttram | Mechanical Engineer · Prototyper · Builder",
+    description: "Turning weird ideas into working physical prototypes.",
     images: ["/og.png"],
   },
 };

@@ -43,7 +43,17 @@ Theme colors, fonts, spacing, and responsive behavior are organized at the top o
 
 ### GitHub Pages
 
-For a simple static deployment, build/export with your preferred static adapter, commit the output, then configure the repository’s Pages source in GitHub settings. Because this starter uses Vinext, deploying to Vercel or Netlify is usually simpler.
+This project includes a GitHub Actions workflow at `.github/workflows/pages.yml`.
+
+The Pages production build command is:
+
+```sh
+npm run build:pages
+```
+
+That command writes the static site to `out/`, verifies key portfolio assets, and creates `out/404.html` for GitHub Pages fallback routing. The workflow installs with `npm ci`, runs the Pages build, uploads `out/` with `actions/upload-pages-artifact`, and deploys with `actions/deploy-pages`.
+
+In the GitHub repository settings, set Pages to deploy from GitHub Actions.
 
 ### Netlify or Vercel
 
