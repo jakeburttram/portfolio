@@ -7,6 +7,9 @@ const requiredAssets = [
   "out/assets/needlepoint/v2-inkjet.webp",
   "out/assets/imu-golf/demo.webp",
   "out/assets/cnc-massager/hero.webp",
+  "out/assets/cnc-massager/cad.png",
+  "out/assets/fireplace/cad.png",
+  "out/assets/uv-plotter/galvo-cad.png",
 ];
 
 await copyFile("out/index.html", "out/404.html");

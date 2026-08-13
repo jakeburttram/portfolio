@@ -92,6 +92,7 @@ const featuredProjects: FeaturedProject[] = [
     status: "IN PROGRESS - current prototype and ongoing experiment.",
     tags: ["CoreXY", "Stepper motors", "Motion control", "CAD", "CNC architecture", "Prototyping"],
     asset: "assets/cnc-massager/hero.webp",
+    relatedAsset: "assets/cnc-massager/cad.png",
     mediaKind: "image",
     tone: "massager-tone",
   },
@@ -113,6 +114,7 @@ const smallerProjects: SmallProject[] = [
       "A miniature desktop fireplace designed and built as a Christmas gift, with a Fusion 360 enclosure, addressable LEDs, an ESP32, soldered electronics, and a custom flickering-fire animation.",
     tags: ["Fusion 360", "ESP32", "Addressable LEDs", "3D printing"],
     asset: "assets/fireplace/hero.webp",
+    relatedAsset: "assets/fireplace/cad.png",
     mediaKind: "image",
     tone: "fire-tone",
   },
@@ -122,7 +124,7 @@ const smallerProjects: SmallProject[] = [
       "A stepper-controlled UV drawing system that used programmed motion to create temporary glowing patterns on phosphorescent material.",
     tags: ["Stepper motors", "Motion control", "Plotting"],
     asset: "assets/uv-plotter/demo.webp",
-    relatedAsset: "assets/uv-plotter/galvo.webp",
+    relatedAsset: "assets/uv-plotter/galvo-cad.png",
     mediaKind: "image",
     tone: "uv-tone",
   },
@@ -179,7 +181,7 @@ function MediaPlaceholder({ asset, relatedAsset, kind, tone, compact = false }: 
       </div>}
       <div className="media-grid" aria-hidden="true" />
       <div className="media-diagram" aria-hidden="true"><span /><span /><span /></div>
-      <span className="media-kind">{kind === "sequence" ? "V1  ->  PROBLEM  ->  V2" : showMedia ? relatedAsset ? "RELATED CLIPS" : "PROJECT CLIP" : kind === "image" ? "ANIMATED PREVIEW" : relatedAsset ? "RELATED CLIPS" : "VIDEO"}</span>
+      <span className="media-kind">{kind === "sequence" ? "V1  ->  PROBLEM  ->  V2" : showMedia ? relatedAsset ? "RELATED VIEWS" : "PROJECT CLIP" : kind === "image" ? "ANIMATED PREVIEW" : relatedAsset ? "RELATED VIEWS" : "VIDEO"}</span>
       <span className="media-asset">{asset}</span>
     </div>
   );
