@@ -215,3 +215,58 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
   *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
 }
+
+.hero{display:none}
+.nav{height:64px;padding:0 clamp(20px,3.3vw,64px);border-bottom:0;background:rgba(243,241,235,.82)}
+.mark{font:700 18px/1 var(--mono);letter-spacing:.26em}
+.nav-links{gap:44px;font-size:11px;letter-spacing:.14em}
+.nav-links a{position:relative;padding:8px 0}
+.nav-links a.active:after,.nav-links a:hover:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink)}
+.work-section{padding:34px clamp(20px,3.3vw,64px) 72px;background:var(--paper)}
+.work-section .section-heading{grid-template-columns:minmax(0,1fr) minmax(300px,.48fr);gap:40px;margin-bottom:30px;align-items:end}
+.work-section .section-heading h2{font-size:clamp(58px,5.8vw,86px);line-height:.94;letter-spacing:-.055em}
+.work-section .section-heading h2 br{display:none}
+.work-section .section-heading h2 em{font-family:var(--serif);font-style:normal;font-weight:600;letter-spacing:-.055em}
+.work-section .section-heading h2 span{font-family:var(--sans);font-size:.8em;color:var(--ink);padding:0 .13em;letter-spacing:0}
+.work-section .section-heading>p:last-child{max-width:465px;margin:0 0 7px;color:#32342f;font-size:16px;line-height:1.45}
+.work-section .eyebrow{margin-bottom:20px;color:#242621}
+.project-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.project-card-button{position:relative;display:flex;min-height:0;height:100%;flex-direction:column;border-radius:7px;background:rgba(246,244,238,.72);border-color:#c9c5ba;box-shadow:0 1px 0 rgba(32,34,31,.04);transition:border-color .2s,background .2s,transform .2s,box-shadow .2s}
+.project-card-button:hover{background:rgba(248,247,242,.92);border-color:#a9a59a;box-shadow:0 12px 28px rgba(32,34,31,.08);transform:translateY(-2px)}
+.project-card-media{display:block;width:100%;min-height:0;aspect-ratio:2.9/1;overflow:hidden;background:#d8d5cb;border-bottom:1px solid #c9c5ba}
+.project-media.compact{height:100%}
+.project-media:after{background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,0) 45%,rgba(0,0,0,.05))}
+.project-media.has-two-media{grid-template-columns:1fr 1fr;gap:1px}
+.media-item.fit-contain img,.media-item.fit-contain video{padding:6px}
+.project-category-badge{position:absolute;z-index:4;left:10px;top:10px;border-radius:4px;background:rgba(243,241,235,.94);border:1px solid rgba(32,34,31,.12);color:var(--ink);padding:5px 8px;font:500 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.project-number{left:auto;right:12px;top:12px;font:700 16px/1 var(--sans);letter-spacing:0;color:var(--paper)}
+.project-card-copy{position:relative;display:flex;flex:1;min-height:128px;padding:12px 14px 13px}
+.project-meta{display:none}
+.project-title-row{display:block;padding-right:42px;margin:0 0 8px;font-size:20px;line-height:1.07;letter-spacing:-.045em}
+.project-description{max-width:90%;margin:0 0 14px;font-size:13px;line-height:1.42;color:#3c3e39}
+.project-card-footer{display:flex;margin-top:auto;padding-right:42px}
+.tags{gap:7px;margin-top:0}
+.tags span{border-color:#d2cec3;background:rgba(243,241,235,.5);padding:5px 7px;font-size:9px;color:#666963}
+.open-mark{position:absolute;right:15px;bottom:30px;width:36px;height:36px;border:1px solid #aaa69c;border-radius:50%;display:grid;place-items:center;font:18px/1 var(--sans);color:var(--ink);background:rgba(243,241,235,.42);letter-spacing:-.08em}
+.project-card-button:hover .open-mark{color:var(--ink);border-color:var(--ink);transform:translateX(2px)}
+
+@media(max-width:1180px){
+  .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project-card-button{display:flex}
+  .project-card-media{aspect-ratio:2.7/1}
+}
+@media(max-width:760px){
+  .nav{height:auto;min-height:68px}
+  .mark{font-size:15px;letter-spacing:.2em}
+  .work-section{padding-top:28px}
+  .work-section .section-heading{grid-template-columns:1fr;gap:18px;margin-bottom:28px}
+  .work-section .section-heading h2{font-size:clamp(43px,13vw,66px)}
+  .work-section .section-heading h2 br{display:block}
+  .project-grid{grid-template-columns:1fr}
+  .project-card-media{aspect-ratio:1.9/1}
+  .project-media.has-two-media{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .project-card-copy{min-height:142px;padding:16px}
+  .project-title-row{font-size:22px}
+  .project-description{font-size:14px}
+  .open-mark{bottom:34px}
+}

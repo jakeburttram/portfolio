@@ -8,6 +8,7 @@ type ProjectMedia = {
   src: string;
   kind: "image" | "video";
   alt: string;
+  poster?: string;
   label?: string;
   fit?: "cover" | "contain";
 };
@@ -48,9 +49,10 @@ const projects: Project[] = [
     tone: "putting-tone",
     media: [
       {
-        src: "assets/putting-cv/hero.webp",
-        kind: "image",
+        src: "assets/putting-cv/hero.mp4",
+        kind: "video",
         alt: "Projected putting game surface with computer-vision tracking setup.",
+        poster: "assets/putting-cv/hero.webp",
       },
     ],
   },
@@ -102,9 +104,10 @@ const projects: Project[] = [
     tone: "golf-tone",
     media: [
       {
-        src: "assets/imu-golf/demo.webp",
-        kind: "image",
+        src: "assets/imu-golf/demo.mp4",
+        kind: "video",
         alt: "Wireless IMU golf simulator controller prototype.",
+        poster: "assets/imu-golf/demo.webp",
       },
     ],
   },
@@ -126,9 +129,10 @@ const projects: Project[] = [
     tone: "massager-tone",
     media: [
       {
-        src: "assets/cnc-massager/hero.webp",
-        kind: "image",
+        src: "assets/cnc-massager/hero.mp4",
+        kind: "video",
         alt: "CNC robotic massager prototype motion platform.",
+        poster: "assets/cnc-massager/hero.webp",
       },
       {
         src: "assets/cnc-massager/cad.png",
@@ -156,9 +160,10 @@ const projects: Project[] = [
     tone: "fitness-tone",
     media: [
       {
-        src: "assets/fitness-platform/demo.webp",
-        kind: "image",
+        src: "assets/fitness-platform/demo.mp4",
+        kind: "video",
         alt: "Interactive fitness platform prototype visualization.",
+        poster: "assets/fitness-platform/demo.webp",
       },
     ],
   },
@@ -180,9 +185,10 @@ const projects: Project[] = [
     tone: "fire-tone",
     media: [
       {
-        src: "assets/fireplace/hero.webp",
-        kind: "image",
+        src: "assets/fireplace/hero.mp4",
+        kind: "video",
         alt: "Finished miniature LED fireplace with flickering light effect.",
+        poster: "assets/fireplace/hero.webp",
       },
       {
         src: "assets/fireplace/cad.png",
@@ -210,15 +216,16 @@ const projects: Project[] = [
     tone: "uv-tone",
     media: [
       {
-        src: "assets/uv-plotter/demo.webp",
-        kind: "image",
+        src: "assets/uv-plotter/demo.mp4",
+        kind: "video",
         alt: "UV glow plotter drawing on phosphorescent material.",
+        poster: "assets/uv-plotter/demo.webp",
       },
       {
-        src: "assets/uv-plotter/galvo-cad.png",
-        kind: "image",
-        alt: "CAD concept for a galvo-style UV light motion assembly.",
-        fit: "contain",
+        src: "assets/uv-plotter/galvo.mp4",
+        kind: "video",
+        alt: "Galvo-style UV light motion assembly prototype clip.",
+        poster: "assets/uv-plotter/galvo.webp",
       },
     ],
   },
@@ -240,9 +247,10 @@ const projects: Project[] = [
     tone: "plotter-tone",
     media: [
       {
-        src: "assets/plotters/chain-plotter.webp",
-        kind: "image",
+        src: "assets/plotters/chain-plotter.mp4",
+        kind: "video",
         alt: "Homemade chain-style pen plotter experiment.",
+        poster: "assets/plotters/chain-plotter.webp",
       },
     ],
   },
@@ -264,14 +272,16 @@ const projects: Project[] = [
     tone: "led-tone",
     media: [
       {
-        src: "assets/led-controller/hero.webp",
-        kind: "image",
+        src: "assets/led-controller/hero.mp4",
+        kind: "video",
         alt: "ESP32 addressable LED controller wiring and enclosure.",
+        poster: "assets/led-controller/hero.webp",
       },
       {
-        src: "assets/led-controller/matrix.webp",
-        kind: "image",
+        src: "assets/led-controller/matrix.mp4",
+        kind: "video",
         alt: "Addressable LED matrix controlled by the ESP32 lighting system.",
+        poster: "assets/led-controller/matrix.webp",
       },
     ],
   },
@@ -308,7 +318,24 @@ function ProjectMediaView({
       {media.map((item) => (
         <figure className={`media-item fit-${item.fit ?? "cover"}`} key={item.src}>
           {item.kind === "video" ? (
-            <video muted loop playsInline autoPlay preload="metadata" aria-label={item.alt}>
+            <video
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="auto"
+              poster={item.poster ? assetPath(item.poster) : undefined}
+              aria-label={item.alt}
+              ref={(element) => {
+                if (element) element.playbackRate = 0.72;
+              }}
+              onLoadedMetadata={(event) => {
+                event.currentTarget.playbackRate = 0.72;
+              }}
+              onPlay={(event) => {
+                event.currentTarget.playbackRate = 0.72;
+              }}
+            >
               <source src={assetPath(item.src)} />
             </video>
           ) : (
@@ -349,10 +376,11 @@ export default function Home() {
   return (
     <main>
       <nav className="nav" aria-label="Primary navigation">
-        <a className="mark" href="#top" aria-label="Jake Burttram home">JB<span>/</span></a>
+        <a className="mark" href="#projects" aria-label="Jake Burttram home">JAKE BURTTRAM</a>
         <button className="menu-button" aria-expanded={menuOpen} aria-controls="nav-links" onClick={() => setMenuOpen(!menuOpen)}>Menu <span>+</span></button>
         <div id="nav-links" className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+          <a className="active" href="#projects" onClick={() => setMenuOpen(false)}>Work</a>
+          <a href="#process" onClick={() => setMenuOpen(false)}>Process</a>
           <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
           <a href={assetPath("assets/Jake-Burttram-Resume.pdf")} target="_blank" rel="noreferrer">Resume</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
@@ -378,7 +406,7 @@ export default function Home() {
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
 
-      <section id="projects" className="projects section">
+      <section id="projects" className="projects work-section">
         <header className="section-heading reveal"><div><p className="eyebrow">01 / SELECTED WORK</p><h2>Idea <span>→</span><br /><em>working system.</em></h2></div><p>Physical prototypes that connect mechanics, sensing, electronics, software, and the real world.</p></header>
         <div className="project-grid">
           {projects.map((project) => (
@@ -386,13 +414,16 @@ export default function Home() {
               <button className="project-card-button" onClick={() => setSelected(project)} aria-label={`Open details for ${project.title}`}>
                 <span className="project-card-media">
                   <ProjectMediaView media={project.media} tone={project.tone} compact />
+                  <span className="project-category-badge">{project.category}</span>
                   <span className="project-number">{project.number}</span>
                 </span>
                 <span className="project-card-copy">
-                  <span className="project-meta"><span>{project.category}</span><span>{project.subtitle}</span></span>
+                  <span className="project-meta">{project.subtitle}</span>
                   <span className="project-title-row"><span>{project.title}</span><span className="open-mark" aria-hidden="true">↗</span></span>
                   <span className="project-description">{project.description}</span>
-                  <span className="tags">{project.tags.slice(0, 5).map((tag) => <span key={tag}>{tag}</span>)}</span>
+                  <span className="project-card-footer">
+                    <span className="tags">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</span>
+                  </span>
                 </span>
               </button>
             </article>
@@ -400,7 +431,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="process section">
+      <section id="process" className="process section">
         <div className="process-intro reveal"><p className="eyebrow">02 / THE THROUGH-LINE</p><h2>Build it.<br /><em>Find the problem.</em></h2></div>
         <div className="process-steps"><article className="process-step reveal"><span>01</span><h3>Idea</h3><p>Start with a strange question, useful annoyance, or physical interaction worth chasing.</p></article><article className="process-step reveal"><span>02</span><h3>Prototype</h3><p>Build the fastest version that can prove the important thing in the real world.</p></article><article className="process-step reveal"><span>03</span><h3>Problem</h3><p>Test it until the messy constraints become visible and specific.</p></article><article className="process-step reveal"><span>04</span><h3>Iteration</h3><p>Change the architecture, mechanism, code, or assumptions until it works better.</p></article></div>
       </section>
