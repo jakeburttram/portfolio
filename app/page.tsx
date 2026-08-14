@@ -17,7 +17,7 @@ type Project = {
   number: string;
   title: string;
   subtitle: string;
-  category: "PROJECT" | "IN PROGRESS" | "EXPERIMENT";
+  category: "PROJECT" | "EXPERIMENT";
   description: string;
   summary: string;
   built: string;
@@ -36,15 +36,14 @@ const projects: Project[] = [
     subtitle: "Interactive golf training and game platform",
     category: "PROJECT",
     description:
-      "A computer-vision putting system that turns a physical putting surface into a projected game and training platform.",
+      "An interactive putting system that combines computer vision and projection to turn a physical putting surface into a programmable game platform.",
     summary:
-      "I built an interactive putting system that uses computer vision and projection to turn a physical putting surface into a programmable game and training platform.",
+      "I built an interactive putting system that combines computer vision and projection to turn a physical putting surface into a programmable game platform.",
     built:
-      "The system uses a webcam to track a golf ball as it travels across a physical putting setup while a projector displays targets and game elements directly onto the playing surface. Python, OpenCV, and Pygame handle camera processing, ball tracking, calibration, shot-state logic, scoring, and the game interface. Camera-to-projector calibration maps positions in the real-world camera image into the projected game coordinate system so physical shots can interact with digital targets.",
+      "A webcam watches an orange golf ball as it rolls across a surface while a projector displays targets, graphics, and game elements directly onto that same area. I built the software in Python using OpenCV and Pygame, including ball tracking, a projector calibration sequence, coordinate transformation, shot detection, scoring, and multiple game modes. The calibration system maps positions from the webcam image into the projected coordinate system, allowing a ball moving through the real world to interact directly with targets and game elements displayed on the surface.",
     challenge:
-      "The difficult part is making the tracking reliable in an environment that actively changes what the camera sees. Projected greens, targets, and animations alter the apparent color of the ball and surface, while the ball itself is moving quickly before reversing direction or settling. I experimented with background subtraction, contour filtering, circularity and size checks, smoothing, state-machine logic, apex/shot detection, and camera/projector calibration to make the system behave more like a game than a computer-vision demo.",
-    status:
-      "Working prototype; continuing to improve tracking reliability, game mechanics, packaging, and the overall physical setup.",
+      "The main challenge was making the physical and digital systems behave like a single playing surface. The camera and projector view the surface from different positions and perspectives, so detected ball coordinates have to be transformed accurately into game coordinates. Tracking also has to remain reliable while the projected image constantly changes underneath the ball. I experimented with color and size filtering, background subtraction, motion tracking, and shot-state logic to reliably identify the ball and determine when a putt has reached its stopping or return point.",
+    status: "Working prototype with calibrated camera-to-projector interaction and multiple game modes.",
     tags: ["Python", "OpenCV", "Pygame", "Computer vision", "Camera calibration", "Projection", "Ball tracking"],
     tone: "putting-tone",
     media: [
@@ -65,17 +64,17 @@ const projects: Project[] = [
   {
     number: "02",
     title: "Automated Needlepoint Printer",
-    subtitle: "Two generations of computer-vision-guided printing",
+    subtitle: "Computer vision and automated fabrication",
     category: "PROJECT",
     description:
-      "A multi-generation system for transferring digital artwork onto needlepoint canvas, first as a CNC plotter and then as an inkjet-based approach.",
+      "A personal engineering challenge to automate the process of producing hand-painted needlepoint canvases.",
     summary:
-      "I wanted to automate the process of transferring digital artwork onto needlepoint canvas. The first prototype used a custom CNC-style plotter; the second changed the architecture entirely.",
+      "After learning why hand-painted needlepoint canvases are expensive to produce, I took automating the process on as a personal engineering challenge.",
     built:
-      "Version 1 repurposed an old 3D-printer-style motion platform into a custom needlepoint plotter. Arduino-based stepper control moved a paint pen over the canvas while a webcam and reference points established the relationship between camera coordinates and machine coordinates. The software scanned the canvas, mapped stitch locations, separated colors, and generated the motion required to mark the design. Version 2 kept the image-processing and alignment ideas but moved the actual printing process to an inkjet-based architecture.",
+      "The first version repurposed an old 3D printer into a vision-guided canvas plotter. I rewired the machine around an Arduino and CNC shield and developed custom GRBL controller software to operate it. A webcam mounted above the machine captures an image of the needlepoint canvas. My software identifies the canvas mesh and fiducial references, maps the individual intersections, and generates G-code based on their physical positions so the machine can place the pattern onto the irregular canvas. I later developed a second approach that uses a standard scanner and inkjet printer to accomplish the same goal without requiring a dedicated plotting machine.",
     challenge:
-      "Version 1 proved that the idea worked, but also exposed the architecture's fundamental limitation: marking thousands of individual stitch locations mechanically was too slow, and multi-color designs required repeated tool changes. Rather than optimizing a system with the wrong basic architecture, I changed the printing method. The problem shifted from CNC motion speed to image processing, physical canvas registration, coordinate mapping, and getting printed artwork to align accurately with the needlepoint mesh.",
-    status: "Working multi-generation prototype and an ongoing experiment in choosing the right system architecture.",
+      "Unlike printing onto a normal sheet of paper, a needlepoint pattern has to align with the physical mesh of the canvas. Small differences in canvas position, orientation, and spacing make a fixed print path unreliable. The core challenge became translating what the camera sees into usable machine coordinates. I developed a vision and calibration workflow that detects the canvas structure, references it to known fiducial locations, and generates toolpaths aligned with the actual canvas rather than assuming a perfectly positioned grid.",
+    status: "Two working automation approaches: a vision-guided plotter and a scanner/inkjet workflow.",
     tags: ["Arduino", "Computer vision", "G-code", "Coordinate transforms", "Calibration", "Inkjet printing", "Motion control"],
     tone: "needlepoint-tone",
     media: [
@@ -94,18 +93,18 @@ const projects: Project[] = [
   },
   {
     number: "03",
-    title: "Wireless IMU Golf Simulator",
-    subtitle: "Physical swing controller for a Unity golf game",
+    title: "IMU Golf Simulator",
+    subtitle: "Wireless motion sensing and game control",
     category: "PROJECT",
     description:
-      "A handheld ESP32 and IMU swing controller that translated real physical motion into a Unity golf shot.",
+      "A physical golf controller that measures the motion of a struck pendulum and sends that data wirelessly to a Unity golf simulation.",
     summary:
-      "I built a physical golf-swing controller that used an IMU and ESP32 to translate a real-world swing into a simulated golf shot inside Unity.",
+      "I built a physical golf controller that measures the motion of a struck pendulum and sends that data wirelessly to a Unity golf simulation.",
     built:
-      "I integrated an ESP32, multi-axis IMU, rechargeable battery, and wireless communication into a handheld pendulum-style golf controller. A physical golf ball at the end of the mechanism provided real motion and feedback during the swing. IMU data was processed into shot direction and speed information and sent wirelessly over Bluetooth to a custom Unity golf environment, where the values controlled the launch of the virtual ball.",
+      "The controller uses a rigid pendulum with a golf ball at the bottom and an ESP32, battery, and IMU mounted farther up the rod. The user strikes the ball with a putter, causing the entire pendulum to swing. The IMU records the resulting motion, and the ESP32 processes and transmits the shot data over Bluetooth to a Unity application on my computer. The Unity program then uses that data to control the resulting golf shot.",
     challenge:
-      "The interesting problem was not simply measuring acceleration. The controller had to turn noisy real-world motion into a small set of values that produced an intuitive virtual response. I had to think about sensing, filtering, communication, physical packaging, and game behavior together so that a player's swing produced a Unity shot that felt understandable rather than arbitrary.",
-    status: "Completed earlier prototype; a useful exploration of embedded sensing and physical-to-digital interaction.",
+      "This project was primarily an exploration of inertial sensing and connecting physical hardware to a game environment. I had to interpret IMU measurements from a moving pendulum, establish reliable Bluetooth communication between the ESP32 and computer, and convert physical motion into useful inputs for the Unity simulation. It gave me a practical introduction to IMU data, wireless embedded communication, and Unity while tying all three together in a physical prototype.",
+    status: "Completed prototype exploring IMU data, wireless embedded communication, and Unity control.",
     tags: ["ESP32", "IMU", "Bluetooth", "Unity", "C#", "Motion sensing", "Embedded systems"],
     tone: "golf-tone",
     media: [
@@ -125,31 +124,31 @@ const projects: Project[] = [
   },
   {
     number: "04",
-    title: "CNC Robotic Massager",
-    subtitle: "Programmable robotic motion platform",
-    category: "IN PROGRESS",
+    title: "CoreXYZ Motion Platform",
+    subtitle: "Custom three-axis motion system",
+    category: "PROJECT",
     description:
-      "A CoreXY-style motion platform exploring programmable massage paths, Z-axis behavior, and controlled physical interaction.",
+      "A three-axis motion platform that keeps all three coupled motors stationary while controlling X, Y, and Z movement.",
     summary:
-      "I'm building an experimental robotic platform that uses CNC-style motion control to explore programmable massage paths and controlled physical interaction.",
+      "I designed and built a three-axis motion platform that uses three coupled stationary motors to control X, Y, and Z movement while keeping all motors off the moving toolhead.",
     built:
-      "The current prototype uses a large CoreXY-style XY motion system with stepper motors and a separate Z-axis mechanism for controlled vertical movement. I designed the mechanism in CAD, fabricated and assembled the motion platform, integrated the motors and electronics, and used CNC/GRBL-style control concepts to move the toolhead through programmable paths. The project is intentionally modular so I can continue experimenting with the contact mechanism and Z-axis behavior without rebuilding the entire machine.",
+      "The mechanism extends the concept of a CoreXY system into three axes. X and Y motion use a conventional CoreXY-style belt arrangement, while a third coupled motor and timing-belt path provide Z-axis movement. All three motors remain mounted to the machine frame. Their movements are combined mathematically to position the toolhead in three dimensions, allowing the moving assembly to remain extremely lightweight. I also built a custom Python controller that allows the prototype to be jogged and operated directly through keyboard controls.",
     challenge:
-      "Unlike a normal plotter or CNC router, this machine is intended to interact physically with a person, so XY position is only part of the problem. The Z-axis and contact mechanism also need predictable travel, compliance, and force behavior. Much of the project has been about building enough of the architecture to expose those practical mechanical problems and then iterating on them.",
-    status: "IN PROGRESS - functional XY and Z motion platform with continued development of the contact mechanism and control strategy.",
-    tags: ["CoreXY", "Stepper motors", "Motion control", "CAD", "CNC architecture", "GRBL", "Prototyping"],
-    tone: "massager-tone",
+      "Adding Z movement to a coupled CoreXY mechanism creates parasitic vertical motion when the toolhead moves in the X-Y plane. The challenge was developing a belt arrangement and control relationship that accounts for this coupling so commanded planar movement does not unintentionally change the toolhead height. The result is a functional CoreXYZ prototype capable of controlled three-axis movement without carrying a motor on the toolhead. The same architecture could be applied to machines where low moving mass is important.",
+    status: "Functional CoreXYZ prototype capable of controlled three-axis movement with stationary motors.",
+    tags: ["CoreXYZ", "CoreXY", "Stepper motors", "Motion control", "CAD", "Python", "Prototyping"],
+    tone: "corexyz-tone",
     media: [
       {
-        src: "assets/cnc-massager/hero.mp4",
+        src: "assets/corexyz-platform/hero.mp4",
         kind: "video",
-        alt: "CNC robotic massager prototype motion platform.",
-        poster: "assets/cnc-massager/hero.webp",
+        alt: "CoreXYZ motion platform prototype.",
+        poster: "assets/corexyz-platform/hero.webp",
       },
       {
-        src: "assets/cnc-massager/cad.png",
+        src: "assets/corexyz-platform/cad.png",
         kind: "image",
-        alt: "CAD model of the CoreXY-style massager motion platform.",
+        alt: "CAD model of the CoreXYZ motion platform.",
         fit: "contain",
       },
     ],
@@ -157,17 +156,17 @@ const projects: Project[] = [
   {
     number: "05",
     title: "Interactive Fitness Platform",
-    subtitle: "Body-position sensing as a physical game controller",
-    category: "EXPERIMENT",
+    subtitle: "Sensing and interactive fitness",
+    category: "PROJECT",
     description:
-      "A sensor-based exercise platform that translated body position and movement into live software input using load cells, distance sensing, an ESP32, and Python.",
+      "A Wii Fit-inspired sensing platform designed to turn bodyweight exercises into interactive games.",
     summary:
-      "I built an experimental fitness controller that used sensors in a physical platform to turn balance and body movement into real-time software input.",
+      "I built a Wii Fit-inspired sensing platform designed to turn bodyweight exercises into interactive games.",
     built:
-      "The prototype combined multiple load cells with an ultrasonic distance sensor to measure how the user's weight and body position changed during movement. An ESP32 collected the sensor readings and streamed them to a Python application, where the data was converted into a live visualization of the user's center of pressure. Shifting weight on the physical platform moved a corresponding point on the computer screen, creating the basis for balance exercises, interactive training, or simple game controls.",
+      "The platform combines multiple load cells with an ultrasonic distance sensor to measure both weight distribution and the user's position above the board. An ESP32 collects the sensor measurements and sends packets of data to a Python application. The software processes the load-cell readings to calculate and display the user's center of pressure while the distance sensor provides an additional dimension of movement. Together, the sensors allow physical exercises and body movements to become inputs for software.",
     challenge:
-      "The interesting part was turning several imperfect physical measurements into one control signal that felt stable and understandable. Individual load-cell readings fluctuate, people do not stand perfectly still, and the physical structure distributes force between sensors. The project became an exercise in sensor integration, calibration, data interpretation, and deciding how much filtering was necessary before a person's movement felt natural on screen.",
-    status: "Working experimental prototype demonstrating real-time body-position sensing and software feedback.",
+      "The interesting part of the project was turning several simple sensor measurements into an intuitive representation of body movement. Individual load-cell readings have limited meaning on their own, but their relative forces can be combined to estimate where the user's weight is centered on the platform. Adding distance measurement expanded the system beyond a conventional balance board and created another input that could be used for movements such as push-ups and other bodyweight exercises.",
+    status: "Working prototype for turning bodyweight movement into interactive software input.",
     tags: ["Load cells", "ESP32", "Ultrasonic sensing", "Python", "Sensor integration", "Data visualization"],
     tone: "fitness-tone",
     media: [
@@ -186,31 +185,31 @@ const projects: Project[] = [
   },
   {
     number: "06",
-    title: "Miniature LED Fireplace",
-    subtitle: "A small electromechanical Christmas-gift build",
-    category: "EXPERIMENT",
+    title: "LED Desktop Fireplace",
+    subtitle: "Embedded lighting and product design",
+    category: "PROJECT",
     description:
-      "A miniature desktop fireplace designed from scratch with a custom enclosure, ESP32 electronics, addressable LEDs, and a programmed flickering-fire effect.",
+      "A miniature desktop fireplace using individually addressable LEDs and custom geometry to create a compact simulated flame effect.",
     summary:
-      "I designed and built a miniature desktop fireplace as a Christmas gift, combining CAD, 3D printing, soldered electronics, embedded programming, and a custom animated lighting effect.",
+      "I designed and built a miniature desktop fireplace that uses individually addressable LEDs and custom geometry to create a compact simulated flame effect.",
     built:
-      "I modeled the fireplace enclosure and cosmetic details in Fusion 360, designed the parts around the available electronics, and fabricated the enclosure with 3D printing. Inside, an ESP32 controls addressable LEDs positioned behind the fire area. I wired and soldered the electronics and programmed the LEDs to vary their brightness and color over time, creating an irregular flickering effect rather than a simple repeating blink pattern.",
+      "I modeled the fireplace and its components in CAD, fabricated the enclosure and translucent log assembly, and integrated an ESP32 with individually addressable LEDs. Custom lighting animations vary the intensity and behavior of the LEDs behind the translucent elements to create the appearance of a small flickering fire.",
     challenge:
-      "Although it is a small project, it required the same integration decisions as a larger product: the enclosure had to physically package the electronics, hide wiring, diffuse the LEDs, remain easy to assemble, and still look like a miniature fireplace rather than an electronics enclosure. The project was a useful exercise in designing the mechanical package and embedded behavior together instead of treating them as separate systems.",
-    status: "Completed functional gift build.",
+      "The project was an exercise in combining mechanical design, fabrication, electronics, and software into a small finished object. The physical geometry, material translucency, LED placement, and animation all had to work together for the lighting effect to read as a flame rather than simply exposed LEDs.",
+    status: "Completed functional desktop lighting prototype.",
     tags: ["Fusion 360", "ESP32", "Addressable LEDs", "3D printing", "CAD", "Soldering", "Embedded programming"],
     tone: "fire-tone",
     media: [
       {
         src: "assets/fireplace/hero.mp4",
         kind: "video",
-        alt: "Finished miniature LED fireplace with flickering light effect.",
+        alt: "LED desktop fireplace with flickering light effect.",
         poster: "assets/fireplace/hero.webp",
       },
       {
         src: "assets/fireplace/cad.png",
         kind: "image",
-        alt: "CAD model of the miniature fireplace enclosure.",
+        alt: "CAD model of the LED desktop fireplace enclosure.",
         fit: "contain",
       },
     ],
@@ -218,24 +217,24 @@ const projects: Project[] = [
   {
     number: "07",
     title: "UV Glow Plotter",
-    subtitle: "Programmable motion drawing with ultraviolet light",
+    subtitle: "Optical motion control",
     category: "EXPERIMENT",
     description:
-      "A programmable UV drawing machine that moved a light source across phosphorescent material to create temporary glowing graphics and patterns.",
+      "A compact plotter that uses two motor-controlled mirrors to steer a UV laser across a glow-in-the-dark surface.",
     summary:
-      "I built a motion-controlled plotter that used ultraviolet light instead of ink, temporarily drawing glowing patterns onto phosphorescent material.",
+      "I built a compact plotter that uses two motor-controlled mirrors to steer a UV laser across a glow-in-the-dark surface.",
     built:
-      "The system used stepper-controlled motion to move a UV light source through programmed XY paths above a phosphorescent surface. Instead of leaving a permanent pen mark, the ultraviolet light excited the material and produced a glowing trace that slowly faded away. I used the project to experiment with motion control, plotting paths, mechanical fabrication, and unconventional ways of turning machine movement into a visual output.",
+      "A UV laser is directed toward two mirrors controlled by stepper motors inside a custom 3D-printed housing. Changing the angle of the mirrors redirects the beam across a phosphorescent surface without physically moving the laser itself. As the UV beam moves across the glow-in-the-dark paint, it temporarily excites the material and creates visible glowing paths and patterns.",
     challenge:
-      "Replacing a pen with light changes the behavior of the machine. The visible line depends not only on XY position but also on the UV intensity, distance from the surface, motion speed, and persistence of the phosphorescent material. The fun engineering problem was balancing those variables well enough for the machine's programmed motion to create recognizable temporary drawings.",
-    status: "Completed experimental prototype.",
+      "Instead of moving a pen or toolhead through X and Y, this project controls the position of a light beam by changing mirror angles. That creates a different relationship between motor movement and the resulting position on the drawing surface. The project was an experiment in optical steering, stepper control, geometry, and translating commanded paths into coordinated mirror motion.",
+    status: "Completed optical motion-control experiment.",
     tags: ["Stepper motors", "Motion control", "XY plotting", "Fabrication", "UV light", "Prototyping"],
     tone: "uv-tone",
     media: [
       {
         src: "assets/uv-plotter/demo.mp4",
         kind: "video",
-        alt: "UV glow plotter drawing on phosphorescent material.",
+        alt: "UV glow plotter steering a beam across phosphorescent material.",
         poster: "assets/uv-plotter/demo.webp",
       },
       {
@@ -248,18 +247,18 @@ const projects: Project[] = [
   },
   {
     number: "08",
-    title: "Pen Plotter Experiments",
-    subtitle: "A series of custom XY drawing-machine experiments",
+    title: "Pen Plotters",
+    subtitle: "Robotic motion systems",
     category: "EXPERIMENT",
     description:
-      "A collection of homemade drawing machines exploring different XY mechanisms, stepper control, fabrication methods, and automated plotting.",
+      "Several drawing robots built to experiment with different mechanisms, scales, and approaches to robotic motion control.",
     summary:
-      "I've built several pen-plotter experiments as a way to explore motion systems, fabrication, motor control, and different ways of producing controlled XY movement.",
+      "I built several drawing robots as a way to experiment with different mechanisms, scales, and approaches to robotic motion control.",
     built:
-      "Rather than treating the pen plotter as one finished product, I used multiple versions as small motion-control experiments. The machines combined custom mechanical structures, stepper motors, belts or other motion-transmission concepts, fabricated components, and software-controlled drawing paths. Each build provided a quick platform for trying another way of turning commanded XY coordinates into physical movement on a page.",
+      "Two of the more unusual designs sit at opposite ends of the scale. One is a large hanging plotter that positions a suspended drawing tool across a broad vertical workspace. The other is a miniature servo-driven SCARA mechanism designed specifically to draw on sticky notes. Both accomplish essentially the same task - positioning a pen in two dimensions - but use completely different mechanical architectures.",
     challenge:
-      "Plotters look simple because the output is only a line on paper, but they make mechanical errors extremely visible. Backlash, frame stiffness, belt tension, alignment, motor behavior, and coordinate accuracy all show up directly in the drawing. These experiments gave me a practical way to learn how seemingly small mechanical choices affect the quality of a controlled motion system.",
-    status: "Ongoing collection of completed and experimental motion-control builds.",
+      "These projects were less about solving one specific problem and more about developing an intuitive understanding of robotic mechanisms. Building radically different machines for the same basic task gave me an opportunity to experiment with kinematics, motor control, mechanical layouts, coordinate systems, and the tradeoffs that come with different motion architectures.",
+    status: "Completed and ongoing drawing-robot experiments.",
     tags: ["XY motion", "Stepper motors", "Fabrication", "Automation", "Motion control", "Prototyping"],
     tone: "plotter-tone",
     media: [
@@ -278,18 +277,18 @@ const projects: Project[] = [
   },
   {
     number: "09",
-    title: "ESP32 Addressable LED Controller",
-    subtitle: "Custom embedded controller for programmable lighting",
-    category: "EXPERIMENT",
+    title: "LED Controller",
+    subtitle: "Embedded lighting control",
+    category: "PROJECT",
     description:
-      "A custom ESP32-based lighting controller built around addressable LEDs, power distribution, wiring, and programmable animation behavior.",
+      "A compact ESP32-based controller for addressable LEDs that makes programmable lighting easier to integrate into physical projects.",
     summary:
-      "I built a custom ESP32-based controller for addressable LEDs to experiment with embedded lighting, electronics integration, and programmable visual effects.",
+      "I built a compact ESP32-based controller for addressable LEDs to make programmable lighting easy to integrate into physical projects.",
     built:
-      "The project brought the microcontroller, LED hardware, power distribution, wiring, and software behavior into one working lighting system. The ESP32 generated the control signals for the addressable LEDs while the hardware side handled the practical details of powering and connecting the lighting elements. I used the controller as a platform for experimenting with animated patterns and individually controlled LED behavior.",
+      "The controller provides a reusable hardware platform for driving addressable LED installations from an ESP32. It packages the electronics and connections into a dedicated controller rather than rebuilding the same breadboard-style setup for every lighting project. The system can run programmable lighting effects and serve as a reusable controller for future builds.",
     challenge:
-      "Addressable LEDs are straightforward to control in small numbers, but a physical lighting system quickly becomes an electronics-integration problem. Power delivery, grounding, wiring layout, connector reliability, current demand, and the way software patterns map onto the physical LED arrangement all affect the result. The project was a useful small-scale exercise in making the electrical hardware and programmed behavior work as one system.",
-    status: "Working embedded-lighting experiment.",
+      "The goal was less about inventing a new lighting algorithm and more about turning a commonly repeated electronics setup into a clean, reusable piece of hardware. It reflects the same approach I use in many of my projects: once I find myself solving the same problem repeatedly, I look for a way to turn that solution into a reusable tool.",
+    status: "Working reusable controller for addressable LED projects.",
     tags: ["ESP32", "Addressable LEDs", "Embedded systems", "Wiring", "Power", "Soldering", "Programming"],
     tone: "led-tone",
     media: [

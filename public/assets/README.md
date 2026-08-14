@@ -18,7 +18,7 @@ assets/
     demo.webp
     hardware.jpg
     unity.jpg
-  cnc-massager/
+  corexyz-platform/
     hero.webp
     prototype.jpg
   fitness-platform/
