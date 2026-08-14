@@ -320,10 +320,23 @@ const capabilities = [
   "Embedded systems",
 ];
 
+const VIDEO_PLAYBACK_RATE = 0.72;
+
 function assetPath(path: string) {
   const base = ((import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL ?? "/");
   const normalizedBase = base.endsWith("/") ? base : `${base}/`;
   return `${normalizedBase}${path.replace(/^\/+/, "")}`;
+}
+
+function syncVideoRate(video: HTMLVideoElement) {
+  video.defaultPlaybackRate = VIDEO_PLAYBACK_RATE;
+  video.playbackRate = VIDEO_PLAYBACK_RATE;
+}
+
+function playVideo(video: HTMLVideoElement) {
+  syncVideoRate(video);
+  if (video.readyState === 0) video.load();
+  video.play().catch(() => {});
 }
 
 function ProjectMediaView({
@@ -344,18 +357,21 @@ function ProjectMediaView({
               muted
               loop
               playsInline
-              autoPlay
-              preload="auto"
+              autoPlay={!compact}
+              preload={compact ? "metadata" : "auto"}
               poster={item.poster ? assetPath(item.poster) : undefined}
               aria-label={item.alt}
               ref={(element) => {
-                if (element) element.playbackRate = 0.72;
+                if (element) syncVideoRate(element);
               }}
               onLoadedMetadata={(event) => {
-                event.currentTarget.playbackRate = 0.72;
+                syncVideoRate(event.currentTarget);
               }}
               onPlay={(event) => {
-                event.currentTarget.playbackRate = 0.72;
+                syncVideoRate(event.currentTarget);
+              }}
+              onCanPlay={(event) => {
+                if (compact && event.currentTarget.dataset.inView === "true") playVideo(event.currentTarget);
               }}
             >
               <source src={assetPath(item.src)} />
@@ -381,6 +397,39 @@ export default function Home() {
       { threshold: 0.12 },
     );
     document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const videos = Array.from(document.querySelectorAll<HTMLVideoElement>(".project-card-media video"));
+
+    if (!("IntersectionObserver" in window)) {
+      videos.forEach(playVideo);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.dataset.inView = "true";
+            playVideo(video);
+          } else {
+            video.dataset.inView = "false";
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: "160px 0px", threshold: 0.2 },
+    );
+
+    videos.forEach((video) => {
+      syncVideoRate(video);
+      video.dataset.inView = "false";
+      observer.observe(video);
+    });
+
     return () => observer.disconnect();
   }, []);
 
