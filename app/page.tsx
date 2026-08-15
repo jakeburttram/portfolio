@@ -84,9 +84,10 @@ const projects: Project[] = [
         alt: "First-generation CNC-style needlepoint plotting setup.",
       },
       {
-        src: "assets/needlepoint/v2-inkjet.webp",
-        kind: "image",
-        alt: "Second-generation inkjet-based needlepoint printing approach.",
+        src: "assets/needlepoint/v2-plotter-donut.mp4",
+        kind: "video",
+        poster: "assets/needlepoint/v2-plotter-donut.webp",
+        alt: "Needlepoint plotter drawing a donut pattern.",
       },
     ],
     iterationCallout: "V1 / CNC plotter -> limitation: too slow -> V2 / inkjet approach",
